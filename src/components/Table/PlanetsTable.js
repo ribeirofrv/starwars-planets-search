@@ -8,19 +8,19 @@ export default function PlanetsTable() {
     <table>
       <thead>
         <tr>
-          <td>Name</td>
-          <td>Rotation Period</td>
-          <td>Orbital Period</td>
-          <td>Diameter</td>
-          <td>Climate</td>
-          <td>Gravity</td>
-          <td>Terrain</td>
-          <td>Surface Water</td>
-          <td>Population</td>
-          <td>Films</td>
-          <td>Created</td>
-          <td>Edited</td>
-          <td>URL</td>
+          <th>Name</th>
+          <th>Rotation Period</th>
+          <th>Orbital Period</th>
+          <th>Diameter</th>
+          <th>Climate</th>
+          <th>Gravity</th>
+          <th>Terrain</th>
+          <th>Surface Water</th>
+          <th>Population</th>
+          <th>Films</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>URL</th>
         </tr>
       </thead>
       <tbody>
