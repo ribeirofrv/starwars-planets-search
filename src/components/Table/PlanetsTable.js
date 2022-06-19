@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 
 export default function PlanetsTable() {
-  const { data } = useContext(PlanetsContext);
+  const { planetsInfo } = useContext(PlanetsContext);
 
   return (
     <table>
@@ -25,7 +25,7 @@ export default function PlanetsTable() {
       </thead>
       <tbody>
         {
-          data.map(({
+          planetsInfo.map(({
             name,
             rotation_period: rotationPeriod,
             orbital_period: orbitalPeriod,
