@@ -1,20 +1,9 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
+import Filters from '../Filters';
 
 export default function MenuSearch() {
-  const {
-    data,
-    nameToFilter,
-    setNameToFilter,
-    setPlanetsInfo } = useContext(PlanetsContext);
-
-  const handleInputSearch = ({ value }) => {
-    setNameToFilter(value);
-    const filterByName = data.filter(
-      ({ name }) => name.toUpperCase().includes(value.toUpperCase()),
-    );
-    setPlanetsInfo(filterByName);
-  };
+  const { filters, setFilters } = useContext(PlanetsContext);
 
   return (
     <menu>
@@ -24,17 +13,14 @@ export default function MenuSearch() {
           type="text"
           id="input-search"
           data-testid="name-filter"
-          value={ nameToFilter }
-          onChange={ ({ target }) => handleInputSearch(target) }
+          value={ filters.filterByName.name }
+          onChange={ ({ target }) => setFilters(
+            { ...filters, filterByName: { name: target.value } },
+          ) }
         />
       </label>
       <br />
-      <label htmlFor="input-filter-column">
-        Column
-        <select>
-          <option value="population">Population</option>
-        </select>
-      </label>
+      <Filters />
     </menu>
   );
 }
