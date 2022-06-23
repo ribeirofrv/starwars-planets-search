@@ -7,7 +7,16 @@ const URL_API = 'https://swapi-trybe.herokuapp.com/api/planets';
 export default function PlanetsContextProvider({ children }) {
   const [data, setData] = useState([]);
   const [planetsInfo, setPlanetsInfo] = useState([]);
-  const [nameToFilter, setNameToFilter] = useState('');
+
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+  });
+
+  const [optionsToFilter, setOptionsToFilter] = useState([{
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  }]);
 
   useEffect(() => {
     const getPlanetsInfo = async () => {
@@ -18,18 +27,47 @@ export default function PlanetsContextProvider({ children }) {
         setData(results);
         setPlanetsInfo(results);
       } catch (error) {
-        console.log(error); // todo something
+        console.log(error);
+        global.alert('Ooops! Something went wrong :(');
       }
     };
     getPlanetsInfo();
   }, []);
 
+  useEffect(() => {
+    const filterByName = data.filter(({ name: planetName }) => planetName.toUpperCase()
+      .includes(filters.filterByName.name.toUpperCase()));
+
+    const filterByNumbers = optionsToFilter.reduce(
+      (filter, currentFilter) => filter.filter((planet) => {
+        switch (currentFilter.comparison) {
+        case 'maior que':
+          return planet[currentFilter.column] > +(currentFilter.value);
+
+        case 'menor que':
+          return planet[currentFilter.column] <= +(currentFilter.value);
+
+        case 'igual a':
+          return +(planet[currentFilter.column]) === +(currentFilter.value);
+
+        default:
+          return filterByName; // prevenção?! ~~this is gambiarra...
+        }
+      }),
+      filterByName,
+    );
+
+    setPlanetsInfo(filterByNumbers);
+  }, [filters.filterByName.name, optionsToFilter]);
+
   const contextValue = {
     data,
     planetsInfo,
     setPlanetsInfo,
-    nameToFilter,
-    setNameToFilter,
+    filters,
+    setFilters,
+    optionsToFilter,
+    setOptionsToFilter,
   };
 
   return (
