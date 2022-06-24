@@ -4,18 +4,32 @@ import PlanetsContext from '../../context/PlanetsContext';
 export default function Filters() {
   const {
     optionsToFilter,
-    setOptionsToFilter } = useContext(PlanetsContext);
+    setOptionsToFilter,
+    filters,
+    setFilters,
+    initialFilter,
+  } = useContext(PlanetsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
-  const saveFilters = () => {
+  const applyFilters = () => {
+    /** Prevent duplicata from filters */
+    const duplicate = initialFilter.findIndex(
+      (filterName) => column === filterName,
+    );
+    initialFilter.splice(duplicate, 1);
+
     setOptionsToFilter([...optionsToFilter, { column, comparison, value }]);
+    setFilters({
+      ...filters,
+      filterByNumericValues: [optionsToFilter],
+    });
   };
 
   return (
-    <>
+    <section>
       <label htmlFor="column-filter">
         Column
         <select
@@ -23,11 +37,11 @@ export default function Filters() {
           id="column-filter"
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {initialFilter.map((option) => (
+            <option key={ option } value={ option }>
+              {option}
+            </option>
+          ))}
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -52,12 +66,12 @@ export default function Filters() {
         />
       </label>
       <button
-        type="submit"
+        type="button"
         data-testid="button-filter"
-        onClick={ () => saveFilters() }
+        onClick={ () => applyFilters() }
       >
         Apply Filter
       </button>
-    </>
+    </section>
   );
 }

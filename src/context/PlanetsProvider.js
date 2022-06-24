@@ -10,6 +10,7 @@ export default function PlanetsContextProvider({ children }) {
 
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
+    filterByNumericValues: [],
   });
 
   const [optionsToFilter, setOptionsToFilter] = useState([{
@@ -17,6 +18,10 @@ export default function PlanetsContextProvider({ children }) {
     comparison: 'maior que',
     value: 0,
   }]);
+
+  const [initialFilter, setinitialFilter] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
 
   useEffect(() => {
     const getPlanetsInfo = async () => {
@@ -68,6 +73,8 @@ export default function PlanetsContextProvider({ children }) {
     setFilters,
     optionsToFilter,
     setOptionsToFilter,
+    initialFilter,
+    setinitialFilter,
   };
 
   return (
