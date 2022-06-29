@@ -14,11 +14,7 @@ export default function PlanetsContextProvider({ children }) {
     filterByNumericValues: [],
   });
 
-  const [optionsToFilter, setOptionsToFilter] = useState([{
-    column: 'rotation_period',
-    comparison: 'maior que',
-    value: 0,
-  }]);
+  const [optionsToFilter, setOptionsToFilter] = useState([]);
 
   const [initialFilter, setinitialFilter] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
