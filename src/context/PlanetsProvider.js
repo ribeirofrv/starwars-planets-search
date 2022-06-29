@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
+// import fetchResponse from '../testData';
 
 const URL_API = 'https://swapi-trybe.herokuapp.com/api/planets';
 
@@ -14,7 +15,7 @@ export default function PlanetsContextProvider({ children }) {
   });
 
   const [optionsToFilter, setOptionsToFilter] = useState([{
-    column: 'population',
+    column: 'rotation_period',
     comparison: 'maior que',
     value: 0,
   }]);
@@ -22,7 +23,6 @@ export default function PlanetsContextProvider({ children }) {
   const [initialFilter, setinitialFilter] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
   );
-
   useEffect(() => {
     const getPlanetsInfo = async () => {
       try {
@@ -50,7 +50,7 @@ export default function PlanetsContextProvider({ children }) {
           return planet[currentFilter.column] > +(currentFilter.value);
 
         case 'menor que':
-          return planet[currentFilter.column] <= +(currentFilter.value);
+          return planet[currentFilter.column] < +(currentFilter.value);
 
         case 'igual a':
           return +(planet[currentFilter.column]) === +(currentFilter.value);

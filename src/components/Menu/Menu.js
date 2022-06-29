@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 import Filters from '../Filters';
+import AppliedFilters from '../Filters/appliedFilters';
 
-export default function MenuSearch() {
+export default function Menu() {
   const { filters, setFilters } = useContext(PlanetsContext);
 
   return (
@@ -21,6 +22,7 @@ export default function MenuSearch() {
       </label>
       <br />
       <Filters />
+      <AppliedFilters />
     </menu>
   );
 }

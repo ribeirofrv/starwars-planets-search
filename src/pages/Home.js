@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../components/Header/Header';
-import MenuSearch from '../components/Menu/MenuSearch';
+import Menu from '../components/Menu/Menu';
 import PlanetsTable from '../components/Table/PlanetsTable';
 
 export default function Home() {
   return (
     <>
       <Header />
-      <MenuSearch />
+      <Menu />
       <PlanetsTable />
     </>
   );

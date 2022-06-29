@@ -21,10 +21,11 @@ export default function Filters() {
     );
     initialFilter.splice(duplicate, 1);
 
-    setOptionsToFilter([...optionsToFilter, { column, comparison, value }]);
+    setOptionsToFilter([{ column, comparison, value }]);
     setFilters({
       ...filters,
-      filterByNumericValues: [optionsToFilter],
+      filterByNumericValues: [...filters.filterByNumericValues,
+        optionsToFilter.map((option) => option !== option.column)],
     });
   };
 
