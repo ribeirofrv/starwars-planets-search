@@ -2,13 +2,17 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 
 export default function AppliedFilters() {
-  const { filters } = useContext(PlanetsContext);
-  console.log(filters.filterByNumericValues);
+  const { filters, optionsToFilter, setOptionsToFilter } = useContext(PlanetsContext);
+
+  const deleteFilter = (column) => {
+    setOptionsToFilter(optionsToFilter
+      .filter((filter) => !filter.includes(column)));
+  };
 
   return (
     <section>
       {filters.filterByNumericValues
-        && filters.filterByNumericValues.map(
+        && optionsToFilter.map(
           (
             { column: chosenColumn,
               comparison: chosenComparison,
@@ -20,7 +24,7 @@ export default function AppliedFilters() {
               {`${chosenColumn} ${chosenComparison} ${chosenValue}`}
               <button
                 type="button"
-                onClick={ () => deleteFilter() }
+                onClick={ () => deleteFilter(chosenColumn) }
               >
                 X
               </button>
