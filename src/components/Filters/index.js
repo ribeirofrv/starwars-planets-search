@@ -14,19 +14,21 @@ export default function Filters() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
-  const applyFilters = () => {
+  const applyFilters = async () => {
     /** Prevent duplicata from filters */
     const duplicate = initialFilter.findIndex(
       (filterName) => column === filterName,
     );
     initialFilter.splice(duplicate, 1);
 
-    setOptionsToFilter([{ column, comparison, value }]);
+    setOptionsToFilter([...optionsToFilter, { column, comparison, value }]);
     setFilters({
       ...filters,
-      filterByNumericValues: [...filters.filterByNumericValues,
-        optionsToFilter.map((option) => option !== option.column)],
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        { column, comparison, value }],
     });
+    setColumn(await initialFilter[0]);
   };
 
   return (

@@ -3,7 +3,7 @@ import PlanetsContext from '../../context/PlanetsContext';
 
 export default function AppliedFilters() {
   const { filters } = useContext(PlanetsContext);
-  // console.log(filters.filterByNumericValues);
+  console.log(filters.filterByNumericValues);
 
   return (
     <section>
