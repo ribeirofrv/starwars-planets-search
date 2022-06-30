@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 import Filters from '../Filters';
 import AppliedFilters from '../Filters/appliedFilters';
+import SortColumn from '../Filters/SortColumns';
 
 export default function Menu() {
   const { filters, setFilters } = useContext(PlanetsContext);
@@ -23,6 +24,7 @@ export default function Menu() {
       <br />
       <Filters />
       <AppliedFilters />
+      <SortColumn />
     </menu>
   );
 }

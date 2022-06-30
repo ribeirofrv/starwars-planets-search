@@ -7,12 +7,15 @@ export default function Filters() {
     setOptionsToFilter,
     filters,
     setFilters,
-    initialFilter,
   } = useContext(PlanetsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+
+  const [initialFilter] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
 
   const applyFilters = async () => {
     /** Prevent duplicata from filters */
@@ -28,7 +31,7 @@ export default function Filters() {
         ...filters.filterByNumericValues,
         { column, comparison, value }],
     });
-    setColumn(await initialFilter[0]);
+    setColumn(initialFilter[0]);
   };
 
   return (
