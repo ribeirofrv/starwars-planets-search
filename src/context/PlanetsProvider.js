@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
-// import fetchResponse from '../testData';
 
 const URL_API = 'https://swapi-trybe.herokuapp.com/api/planets';
 
@@ -12,13 +11,14 @@ export default function PlanetsContextProvider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'population',
+      sort: 'ASC',
+    },
   });
 
   const [optionsToFilter, setOptionsToFilter] = useState([]);
 
-  const [initialFilter, setinitialFilter] = useState(
-    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
-  );
   useEffect(() => {
     const getPlanetsInfo = async () => {
       try {
@@ -69,8 +69,6 @@ export default function PlanetsContextProvider({ children }) {
     setFilters,
     optionsToFilter,
     setOptionsToFilter,
-    initialFilter,
-    setinitialFilter,
   };
 
   return (
