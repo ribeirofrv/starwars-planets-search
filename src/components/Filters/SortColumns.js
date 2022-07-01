@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
-// import PlanetsContext from '../../context/PlanetsContext';
+import React, { useContext, useState } from 'react';
+import PlanetsContext from '../../context/PlanetsContext';
 
 export default function SortColumn() {
-  const [initialFilter, setinitialFilter] = useState(
-    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
-  );
+  const { filters, setFilters } = useContext(PlanetsContext);
 
-  const { columnToSort, setColumnToSort } = useState('');
-  console.log('Sort Column:', columnToSort);
+  const [columnToSort, setColumnToSort] = useState('');
+  const [sortingOption, setSortingOption] = useState('');
+  console.log(sortingOption);
+
+  const optionsToSort = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const sortColumn = () => {
+    setFilters({
+      ...filters,
+      order: { column: columnToSort, sort: sortingOption },
+    });
+  };
 
   return (
     <section>
@@ -18,31 +32,44 @@ export default function SortColumn() {
           id="column-sort"
           onChange={ ({ target }) => setColumnToSort(target.value) }
         >
-          {initialFilter.map((option) => (
+          {optionsToSort.map((option) => (
             <option key={ option } value={ option }>
               {option}
             </option>
           ))}
         </select>
-        <label htmlFor="column-sort-input-asc">
-          <input
-            type="radio"
-            value="ASC"
-            id="column-sort-input-asc"
-            data-testid="column-sort-input-asc"
-          />
-          Ascendent
-        </label>
-        <label htmlFor="column-sort-input-desc">
-          <input
-            type="radio"
-            value="DESC"
-            id="column-sort-input-desc"
-            data-testid="column-sort-input-desc"
-          />
-          Descendent
-        </label>
       </label>
+      <label htmlFor="column-sort-input-asc">
+        <input
+          type="radio"
+          value="ASC"
+          name="column-sort-input"
+          id="column-sort-input-asc"
+          data-testid="column-sort-input-asc"
+          checked={ sortingOption === 'ASC' }
+          onChange={ () => setSortingOption('ASC') }
+        />
+        Ascendent
+      </label>
+      <label htmlFor="column-sort-input-desc">
+        <input
+          type="radio"
+          value="DESC"
+          name="column-sort-input"
+          id="column-sort-input-desc"
+          data-testid="column-sort-input-desc"
+          checked={ sortingOption === 'DESC' }
+          onChange={ () => setSortingOption('DESC') }
+        />
+        Descendent
+      </label>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ () => sortColumn() }
+      >
+        Sort
+      </button>
     </section>
   );
 }
