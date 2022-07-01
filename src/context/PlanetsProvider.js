@@ -36,7 +36,7 @@ export default function PlanetsContextProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const sortedData = data.sort((first, second) => {
+    const sortedData = [...data].sort((first, second) => {
       const firstPlanet = first.name.toUpperCase();
       const secondPlanet = second.name.toUpperCase();
 
@@ -80,12 +80,20 @@ export default function PlanetsContextProvider({ children }) {
 
   useEffect(() => {
     const sortTablePlanets = (column, order) => {
-      const sorted = column
-        .sort((first, second) => first[order.column] - second[order.column]);
+      const sorted = [...column]
+        .sort((first, second) => {
+          if (second[order.column] === 'unknow') return MINUS_ONE;
+          return first[order.column] - second[order.column];
+        });
 
-      if (order.sort === 'ASC') return setPlanetsInfo(sorted);
-      console.log(filters.order);
-      // return setPlanetsInfo(sorted.reverse());
+      if (order.sort === 'DESC') {
+        sorted.sort((first, second) => {
+          if (second[order.column] === 'unknow') return 1;
+          return second[order.column] - first[order.column];
+        });
+      }
+
+      return setPlanetsInfo(sorted);
     };
 
     sortTablePlanets(planetsInfo, filters.order);
